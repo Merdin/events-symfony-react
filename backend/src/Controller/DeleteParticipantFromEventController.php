@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Controller;
+
+use App\Repository\EventRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class DeleteParticipantFromEventController
+{
+    public function __invoke(
+        int $event_id,
+        EventRepository $eventRepository,
+        Security $security,
+        EntityManagerInterface $entityManager,
+    ): JsonResponse
+    {
+        $event = $eventRepository->find($event_id);
+        if (!$event) {
+            throw new NotFoundHttpException("Event not found");
+        }
+
+        $user = $security->getUser();
+        if (!$user) {
+            throw new NotFoundHttpException("User not found");
+        }
+
+        // todo: maybe check if event has the participant.
+
+        $event->removeParticipant($user);
+        $entityManager->persist($event);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'Participant removed from event']);
+    }
+}
