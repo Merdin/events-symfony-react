@@ -51,3 +51,7 @@ symfony server:start
 cd ../frontend
 npm run dev
 ```
+
+# Good To Know
+- Running `fixtures:load` will create some events and users (password: `passwprd`). More info in `AppFixtures` class.
+- Did not use TypeScript at its fullest, did use some types here and there but due to lack of time it was more important for me to finish the job.
