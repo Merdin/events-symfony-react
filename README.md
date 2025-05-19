@@ -1,3 +1,10 @@
+# Project
+The project is build with:
+- Symfony 6.4 & API Platform
+- React + TanStack Router & Query
+
+All the above mentioned frameworks were complete new to me (except React).
+
 # Setup
 ## 1. Clone project
 ## 2. Setup .env file in /backend
